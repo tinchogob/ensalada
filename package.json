@@ -1,0 +1,12 @@
+{
+	"name": "hello-worlds",
+	"description": "Hello world express app", 
+	"version": "0.1.0",
+	"private" : true, 
+	"dependencies": {
+		"express": "3.2.x",
+		"async": "0.2.9",
+		"mocha": "1.15.1",
+		"should": "2.1.1"
+	}
+}
