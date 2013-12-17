@@ -1,17 +1,17 @@
-var https = require('https');
+var http = require('https');
 
 var hostname = "api.mercadolibre.com";
 var port = 443;
 
 if (process.env.NODE_ENV === 'test') {
 
+	http = require('http');
 	hostname = localhost;
 	port = 7666;
 
 }
 
 var options = {
-				method: "GET",
 				hostname: hostname,
 				port: port,
 				secureOptions: require('constants').SSL_OP_NO_TLSv1_2,
@@ -25,11 +25,12 @@ function syncAddition(a, b, callback) {
 
 };
 
-function makeRequest(path, callback) {
+function makeRequest(method, path, callback) {
 	
-	options.path = path;	
+	options.path = path;
+	options.method = method;
 
-	var req = https.request(options, function(res) {
+	var req = http.request(options, function(res) {
 
 		res.setEncoding('utf-8');
 

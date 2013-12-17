@@ -88,7 +88,7 @@ function processSite(site) {
 
 function getItem(id, callback) {
 
-	modul.call("/items/" + id, function(err, data) {
+	modul.call("GET", "/items/" + id, function(err, data) {
 
 		if (err || data.status >= 400) return {error: err};
 		else {
@@ -104,7 +104,7 @@ function getItem(id, callback) {
 
 function getQuestion(id, callback) {
 
-	modul.call("/questions/" + id, function(err, data) {
+	modul.call("GET", "/questions/" + id, function(err, data) {
 
 		if (err || data.status >= 400) return {error: err};
 		else {
@@ -120,7 +120,7 @@ function getQuestion(id, callback) {
 
 function getSite(id, callback) {
 
-	modul.call("/sites/" + id, function(err, data) {
+	modul.call("GET", "/sites/" + id, function(err, data) {
 
 		if (err || data.status >= 400) return {error: err};
 		else {
