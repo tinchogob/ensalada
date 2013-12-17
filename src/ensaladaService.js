@@ -5,94 +5,131 @@ module.exports.get = function(req, res, next) {
 
 	var salad = {};
 
-	var questionId = req.param.questionId;
-	var itemId = req.param.itemId;
-	var siteId = req.param.siteId;
+	var questionId = req.query.questionId;
+	var itemId = req.query.itemId;
+	var siteId = req.query.siteId;
 
 	async.parallel(
 		// Functions to call
 		{
-			question: function getQuestion(callback) {
-	
-					modul.call("/questions/" + questionId, function(err, data) {
-
-						if (err) callback(undefined, {error: err});
-						else {
-
-							callback(undefined, data.text);
-			
-						} 
-			
-					});
+			question: function(callback) {
+					
+				getQuestion(questionId, callback);
 
 			},
 
-			item: function getItem(callback) {
+			item: function(callback) {
 
-						modul.call("/items/" + itemId, function(err, data) {
+				getItem(itemId, callback);
 
-							if (err) callback(undefined, {error: err});
-							else {
+			},
 
-								callback(undefined, data.title);
-		
-							} 
-		
-						});
+			site: function(callback) {
 
-					},
-
-			site: function getSite(callback) {
-
-						var backway = oneway.split("").reverse().join("");
-						
-						modul.call("/sites/" + siteId, function(err, data) {
-
-							if (err) callback(undefined, {error: err});
-							else {
-
-								callback(undefined, data.name);
-							
-							} 
-							
-						});
-
-					}
+				getSite(siteId, callback);
+				
+			}
 
 		}, 
 
 		// Main Callback
 		function(err, results) {
 
-		if (err) {
+			if (err) {
 
-			var e = new Error("Parallel error: " + err.message);
-			next(e);
+				var e = new Error("Parallel error: " + err.message);
+				next(e);
 
-		} else { 
+			} else { 
 
-			if (results.item.error === undefined) {
+				if (results.item.error === undefined) {
 
-				salad.item = results.item;
+					salad.item = results.item;
 
-			} 
+				} 
 
-			if (results.question.error === undefined) {
+				if (results.question.error === undefined) {
+				
+					salad.question = results.question;
+				
+				} 
+
+				if (results.site.error === undefined) {
+				
+					salad.site = results.site;
+
+				} 
+
+				res.json(salad);
 			
-				salad.question = results.question;
-			
-			} 
-
-			if (results.site.error === undefined) {
-			
-				salad.site = results.site;
-
-			} 
-
-			res.json(salad);
-			
-		}
+			}
 
 	});
 
 };
+
+function processItem(item) {
+	
+	return item.price * 100;
+
+}
+
+function processQuestion(question) {
+	
+	return question.text.toUpperCase();
+
+}
+
+function processSite(site) {
+	
+	return site.name.split("").reverse().join("");
+
+}
+
+function getItem(id, callback) {
+
+	modul.call("/items/" + id, function(err, data) {
+
+		if (err || data.status >= 400) return {error: err};
+		else {
+
+			var price = processItem(data);
+			callback(undefined, price);
+
+		} 
+
+	});
+
+}
+
+function getQuestion(id, callback) {
+
+	modul.call("/questions/" + id, function(err, data) {
+
+		if (err || data.status >= 400) return {error: err};
+		else {
+
+			var text = processQuestion(data);
+			callback(undefined, text);
+
+		} 
+
+	});
+
+}
+
+function getSite(id, callback) {
+
+	modul.call("/sites/" + id, function(err, data) {
+
+		if (err || data.status >= 400) return {error: err};
+		else {
+
+			var name = processSite(data);
+			callback(undefined, name);
+		
+		} 
+		
+	});
+
+}

@@ -6,13 +6,14 @@ var ensaladaService = require('./ensaladaService.js');
 
 var server = express();
 
+server.use(express.urlencoded());
 server.use(express.json());
 server.use(domainErrorHandler);
 server.use(server.router);
 server.use(expressErrorHandler);
 
 server.get("/ensalada", ensaladaService.get);
-server.post("/ensalada/:id", ensaladaService.post);
+// server.get("/ensalada/:id", ensaladaService.get);
 
 server.listen(1337);
 console.log("Server listenting at port 1337");
