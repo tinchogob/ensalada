@@ -6,7 +6,7 @@ var port = 443;
 if (process.env.NODE_ENV === 'test') {
 
 	http = require('http');
-	hostname = localhost;
+	hostname = "localhost";
 	port = 7666;
 
 }

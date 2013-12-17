@@ -14,14 +14,14 @@ function getItem(req, res, next) {
 		
 		return;
 
-	} else if (req.query.testCase === "precio170") {
+	} else if (req.query.testCase === "price170") {
 
 		validItem.price = 170;
 		res.json(validItem);
 		
 		return;
 
-	} else if (req.query.testCase === "precio-15") {
+	} else if (req.query.testCase === "price-15") {
 
 		validItem.price = -15;
 		res.json(validItem);
@@ -89,16 +89,16 @@ function getSite(req, res, next) {
 		
 		return;
 
-	} else if (req.query.testCase === "valid") {
+	} else if (req.query.testCase === "brasil2014") {
 
-		validSite.name = "Brasil2014";
+		validSite.name = "brasil2014";
 		res.json(validSite);
 		
 		return;
 
-	} else if (req.query.testCase === "validWithSpaces") {
+	} else if (req.query.testCase === "name with spaces") {
 
-		validSite.name = "Brasil, Brazuca is the ball";
+		validSite.name = "name with spaces";
 		res.json(validSite);
 		
 		return;

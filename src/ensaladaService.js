@@ -90,7 +90,7 @@ function getItem(id, callback) {
 
 	modul.call("GET", "/items/" + id, function(err, data) {
 
-		if (err || data.status >= 400) return {error: err};
+		if (err || data.status >= 400) callback(undefined, {error: "err"});
 		else {
 
 			var price = processItem(data);
@@ -106,7 +106,7 @@ function getQuestion(id, callback) {
 
 	modul.call("GET", "/questions/" + id, function(err, data) {
 
-		if (err || data.status >= 400) return {error: err};
+		if (err || data.status >= 400) callback(undefined, {error: "err"});
 		else {
 
 			var text = processQuestion(data);
@@ -122,7 +122,7 @@ function getSite(id, callback) {
 
 	modul.call("GET", "/sites/" + id, function(err, data) {
 
-		if (err || data.status >= 400) return {error: err};
+		if (err || data.status >= 400) callback(undefined, {error: "err"});
 		else {
 
 			var name = processSite(data);
@@ -133,3 +133,7 @@ function getSite(id, callback) {
 	});
 
 }
+
+module.exports.getItem = getItem;
+module.exports.getSite = getSite;
+module.exports.getQuestion = getQuestion;
