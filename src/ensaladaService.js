@@ -5,9 +5,9 @@ module.exports.get = function(req, res, next) {
 
 	var salad = {};
 
-	var questionId = req.query.questionId;
-	var itemId = req.query.itemId;
-	var siteId = req.query.siteId;
+	var questionId = "123535435";
+	var itemId = "MLA123123123";
+	var siteId = "MLB";
 
 	async.parallel(
 		// Functions to call
@@ -60,7 +60,7 @@ module.exports.get = function(req, res, next) {
 
 				} 
 
-				res.json(salad);
+				return res.json(salad);
 			
 			}
 
@@ -135,5 +135,10 @@ function getSite(id, callback) {
 }
 
 module.exports.getItem = getItem;
+module.exports.processItem = processItem;
+
 module.exports.getSite = getSite;
+module.exports.processSite = processSite;
+
 module.exports.getQuestion = getQuestion;
+module.exports.processQuestion = processQuestion;

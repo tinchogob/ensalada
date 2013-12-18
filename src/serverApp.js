@@ -17,3 +17,5 @@ server.get("/ensalada", ensaladaService.get);
 
 server.listen(1337);
 console.log("Server listenting at port 1337");
+
+exports = server

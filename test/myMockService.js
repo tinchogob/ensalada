@@ -10,33 +10,29 @@ function getItem(req, res, next) {
 	if (!itemsPattern.test(req.params.id)) {
 
 		notfound.message = "Item with id " + req.params.id + " not found.";
-		res.json(notfound);
+		return res.json(notfound);
 		
-		return;
+	} else if (req.query.testCase == undefined) {
 
+		return res.json(validItem);
+			
 	} else if (req.query.testCase === "price170") {
 
 		validItem.price = 170;
-		res.json(validItem);
+		return res.json(validItem);
 		
-		return;
-
 	} else if (req.query.testCase === "price-15") {
 
 		validItem.price = -15;
-		res.json(validItem);
+		return res.json(validItem);
 		
-		return;
-
-
 	} else {
 		
-		notfound.message = "Item with id " + req.params.id + " not found.";
-		res.json(notfound);
+		return res.json(validItem);
 		
-		return;
-
 	}
+
+	next();
 
 }
 
@@ -47,31 +43,26 @@ function getQuestion(req, res, next) {
 	if (!questionsPattern.test(req.params.id)) {
 
 		notfound.message = "Question with id " + req.params.id + " not found.";
-		res.json(notfound);
+		return res.json(notfound);
 		
-		return;
+	} else if (req.query.testCase == undefined) {
 
+		return res.json(validQuestion);
+	
 	} else if (req.query.testCase === "validQuestion") {
 
 		validQuestion.text = "Hola, se puede pagar con mercado pago?";
-		res.json(validQuestion);
-		
-		return;
+		return res.json(validQuestion);
 
 	} else if (req.query.testCase === "emptyText") {
 		
 		validQuestion.text = "";
-		res.json(validQuestion);
-		
-		return;
+		return res.json(validQuestion);
 
 	} else {
 		
-		notfound.message = "Question with id " + req.params.id + " not found.";
-		res.json(notfound);
+		return res.json(validQuestion);
 		
-		return;
-
 	}
 
 	next();
@@ -85,31 +76,26 @@ function getSite(req, res, next) {
 	if (!sitePattern.test(req.params.id)) {
 
 		notfound.message = "Site with id " + req.params.id + " not found.";
-		res.json(notfound);
+		return res.json(notfound);
 		
-		return;
+	} else if (req.query.testCase == undefined) {
 
+		return res.json(validSite);
+		
 	} else if (req.query.testCase === "brasil2014") {
 
 		validSite.name = "brasil2014";
-		res.json(validSite);
+		return res.json(validSite);
 		
-		return;
-
 	} else if (req.query.testCase === "name with spaces") {
 
 		validSite.name = "name with spaces";
-		res.json(validSite);
+		return res.json(validSite);
 		
-		return;
-
 	} else {
 		
-		notfound.message = "Site with id " + req.params.id + " not found.";
-		res.json(notfound);
+		return res.json(validSite);
 		
-		return;
-
 	}
 
 	next();
@@ -120,16 +106,19 @@ function crossCases(req, res, next) {
 
 	if (req.query.testCase === "timeout") {
 
-		return;
+		return setTimeout(function() {
+
+			return req.connection.destroy();
+		
+		}, 3*1000);
 
 	} else if (req.query.testCase === "hangup"){
 
-		req.connection.destroy();
-		return;
+		return req.connection.destroy();
 
 	} else if (req.query.testCase === "srverror") {
 
-		next(new Error("Selferror"));
+		return next(new Error("Selferror"));
 
 	}
 
