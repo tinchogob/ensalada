@@ -43,15 +43,19 @@ function makeRequest(method, path, callback) {
 
 		res.on('end', function() {
 			
+			var response;
+
 			try {
 			
-				return callback(undefined, JSON.parse(datos));
-			
+				response = JSON.parse(datos);
+
 			} catch (err) {
 			
-				return res.emit('error', err);
+				return callback(err, undefined);
 			
 			}
+			
+			return callback(undefined, response);
 		
 		});
 
@@ -66,7 +70,6 @@ function makeRequest(method, path, callback) {
 			return callback(new Error('TimeOut'), undefined);
 
 		});
-
 
 	});
 
