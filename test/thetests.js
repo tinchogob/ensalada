@@ -43,8 +43,8 @@ describe("Mock Tests", function(){
 
 	describe("Grey box testing", function() {
 
-		describe("- Items -", function(done) {
-			
+		describe("- Items -", function() {
+
 			it("Should return a valid item with price=17000", function(done) {
 
 				ensaladaService.getItem("MLA1231231?testCase=price170", function(err, data) {
@@ -191,7 +191,7 @@ describe("Mock Tests", function(){
 
 	});
 
-	describe("Black box testing", function(done) {
+	describe("Black box testing", function() {
 		
 		describe("Happy test", function(done) {
 		

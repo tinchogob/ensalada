@@ -5,9 +5,11 @@ var path = require('path');
 var mocha = new Mocha({
     ui: 'bdd',
     reporter: 'list'
+    // reporter: 'nyan'
 });
 
 mocha.addFile('./test/thetests.js');
+// mocha.addFile('./test/nocktests.js');
 
 mocha.run(function(failures) {
 
